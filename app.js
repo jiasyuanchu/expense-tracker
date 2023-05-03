@@ -1,38 +1,30 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
+const helpers = require("./views/helpers/helpers");
+const routes = require('./routes')
+const app = express()
+const PORT = process.env.PORT || 3000;
 
 // 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const routes = require('./routes')
-// require('./config/mongoose')
 
-const app = express()
-const port = process.env.PORT
+
+// require('./config/mongoose')
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 
-//建立名為hbs的樣版引擎並傳入exphbs的相關參數
-app.engine('hbs', exphbs({
-  defaultLayout: 'main',
-  helpers: {
-    select: function (selected, options) {
-      return options.fn(this).replace(
-        new RegExp(' value=\"' + selected + '\"'),
-        '$& selected="selected"');
-    }
-  }
-}))
-
+//set view template
+app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs", helpers }));
+app.set("view engine", "hbs");
 
 app.use(express.static('public'))
-
-//啟動樣版引擎hbs
-app.set('view engine', 'handlebars')
 app.use(routes)
-app.listen(port, () => {
-  console.log(`this is running on http://localhost:${port}`)
+
+
+app.listen(PORT, () => {
+  console.log(`this is running on http://localhost:${PORT}`)
 })
