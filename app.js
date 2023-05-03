@@ -12,11 +12,12 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-
-
 // require('./config/mongoose')
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
+
+app.use(bodyParser.urlencoded({ extended: true })) //須放在app use router之前
+
 
 //set view template
 app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs", helpers }));

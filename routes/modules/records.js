@@ -9,7 +9,8 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/new', (req, res) => {
-  const { name, date, amount, categoryId } = req.body
+  // const { name, date, amount, categoryId } = req.body
+  console.log(req.body)
   return res.render('new')
 
 })
