@@ -1,20 +1,44 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Expense Tracker</title>
+  <header>
+    <!-- navigation -->
+    <nav class="navbar navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">
 
-  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+          <img src="https://cdn-icons-png.flaticon.com/512/3176/3176833.png"
+            width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
+          {{#if isAuthenticated}}{{ user.name}}的{{/if}}Your Expense Tracker
+        </a>
 
+
+        {{#if isAuthenticated}}
+        <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
+        {{else}}
+        <a href="/users/login" class="btn btn-outline-dark">Login</a>
+        {{/if}}
+
+      </div>
+    </nav>
+
+  </header>
+
+  <!-- link css files here -->
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 
 </head>
 
 <body>
-  {{{ body }}}
-</body>
 
-<script src="/javascripts/popper.js"></script>
-<script src="/javascripts/bootstrap.js"></script>
+  <!-- partial templates will replace the part of "body" here -->
+  {{{ body }}}
+
+  <script src="/javascripts/popper.js"></script>
+  <script src="/javascripts/bootstrap.js"></script>
+
+</body>
 
 </html>
