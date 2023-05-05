@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const routes = require('./routes')
 const app = express()
 const PORT = process.env.PORT || 3000;
+const usePassport = require('./config/passport')
 
 // 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -28,6 +29,8 @@ app.use(session({
 }))
 
 app.use(bodyParser.urlencoded({ extended: true })) //須放在app use router之前
+
+usePassport(app)
 
 app.use(express.static('public'))
 app.use(routes)
