@@ -1,22 +1,18 @@
 const express = require('express')
 const session = require('express-session')
-const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
 const helpers = require("./views/helpers/helpers");
 const bodyParser = require('body-parser')
-const routes = require('./routes')
 const app = express()
 const PORT = process.env.PORT || 3000;
 const usePassport = require('./config/passport')
 
-// 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-// require('./config/mongoose')
-
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })// 設定連線到 mongoDB
+const routes = require('./routes')
+require('./config/mongoose')
 
 //set view template
 app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs", helpers }));
