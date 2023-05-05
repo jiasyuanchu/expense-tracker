@@ -8,11 +8,11 @@
       <div class="container">
         <a class="navbar-brand" href="/">
 
-          <img src="https://cdn-icons-png.flaticon.com/512/3176/3176833.png"
-            width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-          {{#if isAuthenticated}}{{ user.name}}的{{/if}}Your Expense Tracker
+          <img src="https://cdn-icons-png.flaticon.com/512/3176/3176833.png" width="30" height="30"
+            class="d-inline-block align-top" alt="expense-tracker">
+          {{#if isAuthenticated}}{{ user.name}}
+          's{{/if}} Expense Tracker
         </a>
-
 
         {{#if isAuthenticated}}
         <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
