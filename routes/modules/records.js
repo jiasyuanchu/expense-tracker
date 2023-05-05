@@ -9,10 +9,12 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/new', (req, res) => {
-  // const { name, date, amount, categoryId } = req.body
+  const { name, date, amount, categoryId } = req.body
+  const userId = req.user._id
   console.log(req.body)
-  return res.render('new')
-
+  return Record.create({ name, date, amount, categoryId })  // 存入資料庫
+    .then(() => res.redirect('/')) // 新增完成後導回首頁
+    .catch(error => console.log(error))
 })
 
 module.exports = router
