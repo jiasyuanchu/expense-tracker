@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
 const helpers = require("./views/helpers/helpers");
@@ -19,6 +20,12 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 //set view template
 app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs", helpers }));
 app.set("view engine", "hbs");
+
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(bodyParser.urlencoded({ extended: true })) //須放在app use router之前
 
