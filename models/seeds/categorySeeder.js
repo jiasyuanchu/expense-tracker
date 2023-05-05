@@ -12,7 +12,7 @@ const CATEGORY = {
 const categories = [];
 
 for (let category in CATEGORY) {
-  categories.push({ name: category, icon: CATEGORY['category'] });
+  categories.push({ name: category, icon: CATEGORY[category] });
 }
 
 db.once("open", async () => {

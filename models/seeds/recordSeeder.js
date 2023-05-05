@@ -1,27 +1,47 @@
-const mongoose = require('mongoose')
+const db = require("../../config/mongoose");
 const Record = require('../record')
+const Category = require("../category");
+const User = require("../user");
+const SEED_USERS = require('./user.json');
+const SEED_RECORDS = require("./record.json");
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-db.once('open', () => {
-  console.log('mongodb connected!')
-  for (let i = 0; i < 10; i++) {
-    Record.create({
-      name: `name-${i}`,
-      type: `String`,
-      date: `new Date('2022-05-01')`,
-      amount: `10`,
-      userId: `userId`,
-      categoryId: `categoryId`,
+db.once("open", () => {
+  Promise.all(
+    SEED_USERS.map((USER) => {
+      return bcrypt
+        .genSalt(10)
+        .then((salt) => bcrypt.hash(USER.password, salt))
+        .then((hash) =>
+          User.create({
+            name: USER.name,
+            email: USER.email,
+            password: hash,
+          })
+        )
+        .then((user) => {
+          console.log('user created.')
+          const userId = user._id;
+          return Promise.all(
+            SEED_RECORDS.map((record) => {
+              return Category.findOne({ name: record.category })
+                .lean()
+                .then((category) => {
+                  const categoryId = category._id;
+                  const finalRecord = Object.assign({}, record, {
+                    userId,
+                    categoryId,
+                  });
+                  return Record.create(finalRecord);
+                })
+            })
+          );
+        });
     })
-  }
-  console.log('done')
-})
+  )
+    .then(() => {
+      console.log("All users and records are created.");
+      process.exit();
+    })
+    .catch((e) => console.log(e));
+});
