@@ -1,32 +1,22 @@
+require('../../config/mongoose')
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
+  console.log('dot env is required')
 }
 
-const Category = require("../category");
-const db = require("../../config/mongoose");
-const CATEGORY = {
-  Housing: 'fa-solid fa-house',
-  Transportation: 'fa-solid fa-van-shuttle',
-  Entertainment: 'fa-solid fa-face-grin-beam',
-  FoodandBeverage: 'fa-solid fa-utensils',
-  Other: 'fa-solid fa-pen',
-};
+const db = require('../../config/mongoose')
+const Category = require('../category')
+const categoryData = require('../seedsData/category.json').results
 
-console.log(process.env.MONGODB_URI);
-
-const categories = [];
-
-
-for (let category in CATEGORY) {
-  categories.push({ name: category, icon: CATEGORY[category] });
-}
-
-db.once("open", async () => {
+db.once('open', async () => {
+  console.log('starting categorySeeder...')
+  console.log('creating category data...')
   try {
-    await Promise.all(categories.map((category) => Category.create(category)));
-    console.log("done");
-    process.exit();
+    await Category.create(categoryData)
+    console.log('categorySeeder done')
+    process.exit()
   } catch (error) {
-    console.error(error);
+    console.log(error)
   }
-});
+})
