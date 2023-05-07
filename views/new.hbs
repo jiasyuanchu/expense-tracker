@@ -14,12 +14,11 @@
       </div>
       <div class="mb-3 d-flex">
         <label for="category" class="input-group-text">Category*</label>
-        <select name="categoryId" class="form-select" id="category" required>
-          <option value="1">家居物業</option>
-          <option value="2">交通出行</option>
-          <option value="3">休閒娛樂</option>
-          <option value="4">餐飲食品</option>
-          <option value="5">其他</option>
+        <select class="form-control" id="category" name="category" id="category" required>
+          <option value="">選擇類型</option>
+          {{#each categories}}
+          <option value="{{this.name}}">{{this.name}}</option>
+          {{/each}}
         </select>
       </div>
       <div class="mb-3 d-flex">

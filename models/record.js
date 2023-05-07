@@ -4,29 +4,30 @@ const Schema = mongoose.Schema
 const recordSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   date: {
     type: Date,
     required: true,
+    default: Date.now
   },
   amount: {
     type: Number,
-    required: true,
+    require: true,
+    defaultd: 0
   },
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "User", //建立關聯模型
-    index: true, //索引
-    required: true,
+    ref: 'User',
+    index: true,
+    required: true
   },
   categoryId: {
     type: Schema.Types.ObjectId,
-    ref: "Category",
+    ref: 'Category',
     index: true,
-    required: true,
-  },
-});
+    required: true
+  }
+})
 
-//將recordSchema輸出為名為Record的Mongoose模型
-module.exports = mongoose.model('Record', recordSchema) 
+module.exports = mongoose.model('Record', recordSchema)
