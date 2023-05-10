@@ -1,0 +1,39 @@
+[
+  {
+    "name": "修理牆壁",
+    "date": "2023-02-05",
+    "amount": 87000,
+    "category": "家居物業"
+  },
+  {
+    "name": "搭計程車",
+    "date": "2023-02-07",
+    "amount": 95,
+    "category": "交通出行"
+  },
+  {
+    "name": "聽音樂會",
+    "date": "2023-02-08",
+    "amount": 177,
+    "category": "休閒娛樂"
+  },
+  {
+    "name": "大吃一頓",
+    "date": "2023-02-10",
+    "amount": 3999,
+    "category": "餐飲食品"
+  },
+  {
+    "name": "借給別人",
+    "date": "2023-02-15",
+    "amount": 15000,
+    "category": "其他"
+  },
+  {
+    "type": "買飲料",
+    "name": "Pet's food",
+    "date": "2023-02-19",
+    "amount": 50,
+    "category": "餐飲食品"
+  }
+]

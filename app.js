@@ -7,11 +7,13 @@ const session = require('express-session')
 const usePassport = require('./config/passport')
 const app = express()
 const PORT = process.env.PORT || 3000;
+
 require('./config/mongoose')
 
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
+  console.log('dot env is required')
 }
 
 app.use(express.static('public'))
