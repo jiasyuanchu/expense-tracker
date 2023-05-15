@@ -53,10 +53,10 @@ router.get('/', async (req, res) => {
     req.session.category = selectedCategory // 存入session
 
     //針對each record 依據分類/計算金額
-    let totalAmount = 0
+    let amount = 0
     const categories = await Category.find({}).lean()
     records.forEach((record) => {
-      totalAmount += record.amount
+      amount += record.amount
       const matchCate = categories.find(cate => {
         return record.categoryId.toString() === cate._id.toString()
       })
@@ -81,13 +81,13 @@ router.get('/', async (req, res) => {
     })
 
     // 轉換成台幣，並拿掉小數點
-    const totalAmountString = totalAmount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).split('.')[0]
+    const totalAmount = amount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).split('.')[0]
 
     // console.log(records)
     // 回傳 records
     res.render('index', {
       records,
-      totalAmountString,
+      totalAmount,
       categories,
       selectedCategory,
       sort
