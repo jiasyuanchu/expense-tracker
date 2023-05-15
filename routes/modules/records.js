@@ -83,7 +83,7 @@ router.get('/', async (req, res) => {
     // 轉換成台幣，並拿掉小數點
     const totalAmount = amount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).split('.')[0]
 
-    // console.log(records)
+    console.log(records)
     // 回傳 records
     res.render('index', {
       records,
@@ -99,7 +99,6 @@ router.get('/', async (req, res) => {
   }
 })
 
-
 //update editing 
 router.get('/edit/:id', async (req, res) => {
   const recordId = req.params.id
@@ -109,7 +108,6 @@ router.get('/edit/:id', async (req, res) => {
   //   req.flash('warning_msg', '出現預期外的問題，請您再嘗試一次。')
   //   return res.redirect('/records')
   // }
-
   const categories = await Category.find({}).lean()
   const category = categories.find(cate => cate._id.toString() === record.categoryId.toString())
 

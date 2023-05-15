@@ -30,7 +30,16 @@ app.use(session({
 }))
 
 //set view template
-app.engine("handlebars", exphbs({ defaultLayout: "main", extname: ".hbs", helpers }));
+app.engine("handlebars", exphbs({ 
+  defaultLayout: "main", 
+  extname: ".hbs", 
+  helpers: {
+    ifEquals: function (arg1, arg2, options) {
+      return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
+    }
+  }
+}));
+
 app.set('view engine', 'handlebars');
 
 
