@@ -38,8 +38,11 @@ router.get("/sort", async (req, res) => {
       };
       return formattedRecord;
     });
-
+    //count the total amount by the selected category
     let totalAmount = 0;
+    for (const record of records) {
+      totalAmount += record.amount;
+    }
     totalAmount = totalAmount.toLocaleString();
 
     res.render("index", {
