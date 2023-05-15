@@ -43,7 +43,7 @@
             <span class="col-2 h4 text-info">{{this.amount}}</span>
             <div class="col-3">
               <div class="d-flex justify-content-around">
-                <a class="btn btn-success" href="/records/{{ this._id }}/edit">edit</a>
+                <a class="btn btn-success" href="/records/edit/{{ this._id }}">edit</a>
                 <form action="/records/{{ this._id }}?_method=DELETE" method="POST">
                   <button class="btn btn-danger" type="submit">delete</button>
                 </form>

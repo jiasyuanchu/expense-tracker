@@ -99,4 +99,40 @@ router.get('/', async (req, res) => {
   }
 })
 
+
+//更新
+router.get('/edit/:id', async (req, res) => {
+  const recordId = req.params.id
+  const record = await Record.findById(recordId).lean()
+  // // guard for no record
+  // if (!record) {
+  //   req.flash('warning_msg', '出現預期外的問題，請您再嘗試一次。')
+  //   return res.redirect('/records')
+  // }
+
+  const categories = await Category.find({}).lean()
+  const category = categories.find(cate => cate._id.toString() === record.categoryId.toString())
+
+  // convert date to year.month.day format
+  const date = record.date.toISOString().slice(0, 10)
+
+  res.render('edit', {
+    id: record._id,
+    name: record.name,
+    amount: record.amount,
+    category: category.name,
+    date,
+    categories
+  })
+})
+
+// Update put
+router.put("/edit/:id", (req, res) => {
+  const _id = req.params.id;
+  const userId = req.user._id;
+  Record.findOneAndUpdate({ _id, userId }, req.body)
+    .then(() => res.redirect("/"))
+    .catch((e) => console.log(e));
+});
+
 module.exports = router

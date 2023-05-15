@@ -2,6 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars');
 const routes = require('./routes')
 const helpers = require("./views/helpers/helpers");
+const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const usePassport = require('./config/passport')
@@ -19,6 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 app.use(bodyParser.urlencoded({ extended: true })) //須放在app use router之前
+app.use(methodOverride('_method'))
 app.use(express.static('public'))
 
 app.use(session({
