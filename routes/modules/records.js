@@ -100,7 +100,7 @@ router.get('/', async (req, res) => {
 })
 
 
-//更新
+//update editing 
 router.get('/edit/:id', async (req, res) => {
   const recordId = req.params.id
   const record = await Record.findById(recordId).lean()
@@ -126,7 +126,7 @@ router.get('/edit/:id', async (req, res) => {
   })
 })
 
-// Update put
+// Update sending updates
 router.put("/edit/:id", (req, res) => {
   const _id = req.params.id;
   const userId = req.user._id;
@@ -134,5 +134,18 @@ router.put("/edit/:id", (req, res) => {
     .then(() => res.redirect("/"))
     .catch((e) => console.log(e));
 });
+
+// delete function
+router.delete("/delete/:id", (req, res) => {
+  const _id = req.params.id;
+  const userId = req.user._id;
+  Record.findOne({ _id, userId })
+    .then((record) => {
+      return record.remove();
+    })
+    .then(() => res.redirect("/"))
+    .catch((e) => console.log(e));
+});
+
 
 module.exports = router
