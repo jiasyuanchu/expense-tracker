@@ -13,9 +13,9 @@ router.get('/new', async (req, res) => {
 router.post('/new', async (req, res) => {
   const data = req.body
   const categories = await Category.find({}).lean()
-  const TargetCategory = categories.find(cate => cate.name === data.category)
+  const selectedCategory = categories.find(cate => cate.name === data.category)
   data.userId = req.user._id
-  data.categoryId = TargetCategory._id
+  data.categoryId = selectedCategory._id
   await Record.create(data) // 等待create資料
   res.redirect('/records')
 })
@@ -72,12 +72,10 @@ router.get('/', async (req, res) => {
         'fa-' + iconClass + ' ' + 'fa-' + iconShape
       // 存入 class
       record.fontAwesomeClass = fontAwesomeClass
-      
-      //日期
+
+      // 整理為乾淨的日期格式 year/month/date
       const date = new Date(record.date)
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-
-      // 把日期整理成 year/month/date
       const localDateString = date.toLocaleDateString('zh-TW', options)
       record.localDateString = localDateString
     })
@@ -85,6 +83,7 @@ router.get('/', async (req, res) => {
     // 轉換成台幣，並拿掉小數點
     const totalAmountString = totalAmount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).split('.')[0]
 
+    // console.log(records)
     // 回傳 records
     res.render('index', {
       records,

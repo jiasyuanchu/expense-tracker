@@ -7,6 +7,7 @@ const session = require('express-session')
 const usePassport = require('./config/passport')
 const app = express()
 const PORT = process.env.PORT || 3000;
+const hbshelpers = require('handlebars-helpers');
 
 require('./config/mongoose')
 
@@ -16,8 +17,9 @@ if (process.env.NODE_ENV !== 'production') {
   console.log('dot env is required')
 }
 
-app.use(express.static('public'))
+
 app.use(bodyParser.urlencoded({ extended: true })) //須放在app use router之前
+app.use(express.static('public'))
 
 app.use(session({
   secret: 'ThisIsMySecret',
@@ -26,8 +28,8 @@ app.use(session({
 }))
 
 //set view template
-app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs", helpers }));
-app.set("view engine", "hbs");
+app.engine("handlebars", exphbs({ defaultLayout: "main", extname: ".hbs", helpers }));
+app.set('view engine', 'handlebars');
 
 
 usePassport(app)
