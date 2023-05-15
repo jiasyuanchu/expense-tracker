@@ -1,6 +1,35 @@
 <div class="container search-bar">
   {{!-- sorting bar --}}
-  <div></div>
+  <div>
+          <form action="/records" method="get">
+            <div class="input-group mb-3">
+          
+              <label class="input-group-text" for="category">帳目類型</label>
+              <select class="form-control" id="category" name="category" id="category" onchange="this.form.submit()">
+                <option value="ALL">全部</option>
+                <!--有 selectCategory -->
+                {{#if selectedCategory }}
+                {{#each categories as | cate |}}
+                {{#with ../selectedCategory as |selectedCate|}}
+                {{#isSame cate.name selectedCate}}
+                <option value="{{cate.name}}" selected>{{cate.name}}</option>
+                {{else}}
+                <option value="{{cate.name}}">{{cate.name}}</option>
+                {{/isSame}}
+                {{/with}}
+                {{/each}}
+          
+                <!--沒有 selectCategory -->
+                {{else}}
+                {{#each categories}}
+                <option value="{{this.name}}">{{this.name}}</option>
+                {{/each}}
+                {{/if}}
+              </select>
+            </div>
+          </form>
+
+  </div>
   {{!-- total amount --}}
   <div class="d-flex align-items-start flex-row" style="height: 75px;">
     <h3 class="p-2">Total Amount:</h3>
