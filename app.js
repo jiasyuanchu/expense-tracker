@@ -1,14 +1,14 @@
 const express = require('express')
 const exphbs = require('express-handlebars');
 const routes = require('./routes')
-const helpers = require("./views/helpers/helpers");
+// const helpers = require("./views/helpers/helpers");
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const usePassport = require('./config/passport')
 const app = express()
 const PORT = process.env.PORT || 3000;
-const hbshelpers = require('handlebars-helpers');
+const helpers = require('handlebars-helpers');
 
 require('./config/mongoose')
 
@@ -36,7 +36,14 @@ app.engine("handlebars", exphbs({
   helpers: {
     ifEquals: function (arg1, arg2, options) {
       return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
-    }
+    },
+    selected: function (a, b) {
+      if (a === b) {
+        return "selected";
+      } else {
+        return "";
+      }
+    },
   }
 }));
 

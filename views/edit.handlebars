@@ -17,8 +17,8 @@
         <select class="form-control" id="category" name="category" id="category" required>
           <option value="">選擇類型</option>
           {{#each categories}}
-          <option value="{{this.name}}">{{this.name}}</option>
-          {{/each}}
+            <option value="{{this._id}}" {{selected this.name ../category}}>{{this.name}}</option>
+            {{/each}}
         </select>
       </div>
       <div class="mb-3 d-flex">

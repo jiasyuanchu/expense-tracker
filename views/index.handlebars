@@ -1,22 +1,18 @@
 <div class="container search-bar">
   {{!-- sorting bar --}}
-
-  <div>
+  <div class="row d-flex justify-content-center">
     <form action="/sort" method="get" class="d-flex justify-content-around">
       <div class="input-group input-group-sm" style="width:60%">
         <label class="input-group-text" for="categoryFilter">Filter</label>
-        <select class="form-control" id="sort" name="sort" id="sort" onchange="this.form.submit()"
-          style="width: 100px;">
-          <option value="" {{#unless categoryFilter}}selected{{/unless}}>All Category</option>
+        <select name="categoryFilter" class="form-select mx-1" id="categoryFilter" onchange="this.form.submit()">
+          <option value="" {{selected categoryFilter "" }}>All Category</option>
           {{#each categories}}
-          <option value="{{this._id}}" {{#ifEquals this.name ../categoryFilter}}selected{{/ifEquals}}>{{this.name}}
-          </option>
+          <option value="{{this._id}}" {{selected this.name ../categoryFilter}}>{{this.name}}</option>
           {{/each}}
         </select>
       </div>
     </form>
   </div>
-
   {{!-- total amount --}}
   <div class="d-flex align-items-start flex-row" style="height: 75px;">
     <h3 class="p-2">Total Amount:</h3>
@@ -40,9 +36,9 @@
       {{#each records}}
       <li class="list-group-item">
         <div class="row">
-          <span class="col-1"><i class="{{this.fontAwesomeClass}} h5"></i></span>
+          <span class="col-1"><i class="{{this.icon}} h5"></i></span>
           <span class="col-4 lead">{{ this.name }}</span>
-          <span class="col-2">{{this.localDateString}}</span>
+          <span class="col-2">{{this.date}}</span>
           <span class="col-2 h4 text-info">{{this.amount}}</span>
           <div class="col-3">
             <div class="d-flex justify-content-around">
