@@ -9,6 +9,7 @@ const usePassport = require('./config/passport')
 const app = express()
 const PORT = process.env.PORT || 3000;
 const helpers = require('handlebars-helpers');
+const flash = require('connect-flash') 
 
 require('./config/mongoose')
 
@@ -52,10 +53,13 @@ app.set('view engine', 'handlebars');
 
 usePassport(app)
 
+app.use(flash())
 app.use((req, res, next) => {
-  // 你可以在這裡 console.log(req.user) 等資訊來觀察
+  // console.log(req.user)
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')  
+  res.locals.warning_msg = req.flash('warning_msg')  
   next()
 })
 
