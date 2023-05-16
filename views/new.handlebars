@@ -2,6 +2,7 @@
   <h3>Create a new expense</h3>
   <div class="my-3" style="width: 80%;">
     <p>fields marked * are required</p>
+    {{> message}}
     <form action="/records/new" method="POST" novalidate>
       <div class="mb-3 d-flex">
         <label for="name" class="input-group-text">Name*</label>
@@ -16,9 +17,9 @@
         <label for="category" class="input-group-text">Category*</label>
         <select class="form-control" id="category" name="category" id="category" required>
           <option value="">選擇類型</option>
-            {{#each categories}}
-            <option value="{{this.name}}">{{this.name}}</option>
-            {{/each}}
+          {{#each categories}}
+          <option value="{{this.name}}">{{this.name}}</option>
+          {{/each}}
         </select>
       </div>
       <div class="mb-3 d-flex">

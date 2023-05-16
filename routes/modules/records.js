@@ -10,15 +10,52 @@ router.get('/new', async (req, res) => {
   res.render('new', { categories })
 })
 
-router.post('/new', async (req, res) => {
-  const data = req.body
-  const categories = await Category.find({}).lean()
-  const selectedCategory = categories.find(cate => cate.name === data.category)
-  data.userId = req.user._id
-  data.categoryId = selectedCategory._id
-  await Record.create(data) // 等待create資料
-  res.redirect('/records')
-})
+router.post("/new", async (req, res) => {
+  try {
+    let categories = await Category.find().lean();
+    categories = categories.map((cate) => {
+      cate._id = cate._id.toString();
+      return cate;
+    });
+    const userId = req.user._id;
+    const { name, date, category, amount } = req.body;
+    const data = req.body
+    const selectedCategory = categories.find(cate => cate.name === data.category)
+    data.categoryId = selectedCategory._id
+    let categoryId = data.categoryId
+
+    const errors = [];
+
+    // console.log(name);
+    // console.log(date);
+    // console.log(selectedCategory);
+    // console.log(categoryId);
+    // console.log(data.categoryId);
+    // console.log(amount);
+
+    if ( !name || !date || !categoryId || !amount) {
+      errors.push({ message: "All fields are required." });
+    }
+
+    if (errors.length) {
+      res.render("new", {
+        categories,
+        name,
+        date,
+        category,
+        categoryId,
+        amount,
+        errors,
+      });
+    } else {
+      await Record.create({ name, date, category, categoryId, amount, userId });
+      res.redirect("/");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 
 //render根目錄
 router.get("/", (req, res) => {
