@@ -17,7 +17,8 @@ router.post("/new", async (req, res) => {
       cate._id = cate._id.toString();
       return cate;
     });
-    const userId = req.user._id;
+
+    const userId = req.user?.id //用Optional Chaining使值成為 null 或 undefined 的屬性，不會報錯
     const { name, date, category, amount } = req.body;
     const data = req.body
     const selectedCategory = categories.find(cate => cate.name === data.category)
@@ -33,7 +34,7 @@ router.post("/new", async (req, res) => {
     // console.log(data.categoryId);
     // console.log(amount);
 
-    if ( !name || !date || !categoryId || !amount) {
+    if (!name || !date || !categoryId || !amount) {
       errors.push({ message: "All fields are required." });
     }
 
