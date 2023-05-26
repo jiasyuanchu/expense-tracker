@@ -18,11 +18,11 @@ router.post("/new", async (req, res) => {
       return cate;
     });
 
-    const userId = req.user?.id //用Optional Chaining使值成為 null 或 undefined 的屬性，不會報錯
+    const userId = req.user._id
     const { name, date, category, amount } = req.body;
     const data = req.body
     const selectedCategory = categories.find(cate => cate.name === data.category)
-    data.categoryId = selectedCategory._id
+    data.categoryId = selectedCategory?._id //使用optional chaining對前端傳來空值時做處理
     let categoryId = data.categoryId
 
     const errors = [];
